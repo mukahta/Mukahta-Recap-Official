@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="my" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mukahta Recap - Official Movie Recap Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mukahta: {
+                            gold: '#F5C518',
+                            goldHover: '#E0B20D',
+                            red: '#E50914',
+                            darkBg: '#0D0D11',
+                            cardBg: '#16161E',
+                            border: '#272736',
+                            textMuted: '#9CA3AF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', 'Padauk', sans-serif;
+            background-color: #0D0D11;
+            color: #E5E7EB;
+        }
+        /* Custom Glowing Effect for Cards */
+        .card-glow:hover {
+            box-shadow: 0 10px 25px -5px rgba(245, 197, 24, 0.15), 0 8px 10px -6px rgba(229, 9, 20, 0.1);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0D11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #272736;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F5C518;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mukahta-gold selection:text-black">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-mukahta-darkBg/90 backdrop-blur-md border-b border-mukahta-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Logo Section -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-gradient-to-tr from-mukahta-red to-mukahta-gold rounded-xl flex items-center justify-center font-black text-black text-xl shadow-lg shadow-mukahta-red/20 group-hover:scale-105 transition-all">
+                    M
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl sm:text-2xl tracking-wider text-white block leading-none">MUKAHTA <span class="text-mukahta-gold">RECAP</span></span>
+                    <span class="text-[10px] text-mukahta-gold tracking-widest uppercase font-semibold">Official Movie Recap Hub</span>
+                </div>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md relative hidden md:block">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" onkeyup="filterMovies()" placeholder="ဇာတ်လမ်းနာမည် ရှာရန်..." 
+                    class="w-full bg-mukahta-cardBg border border-mukahta-border rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mukahta-gold transition-colors">
+            </div>
+
+            <!-- Header Actions & Social Links -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="openAddModal()" class="bg-mukahta-gold hover:bg-mukahta-goldHover text-black px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-md transition-all">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">Recap အသစ်ထည့်ရန်</span>
+                </button>
+                <a href="https://youtube.com" target="_blank" title="Mukahta Recap YouTube" class="w-10 h-10 bg-red-600/20 text-red-500 border border-red-600/40 hover:bg-red-600 hover:text-white rounded-xl flex items-center justify-center transition-all">
+                    <i class="fa-brands fa-youtube text-lg"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" title="Mukahta Recap Facebook" class="w-10 h-10 bg-blue-600/20 text-blue-400 border border-blue-600/40 hover:bg-blue-600 hover:text-white rounded-xl flex items-center justify-center transition-all">
+                    <i class="fa-brands fa-facebook-f text-lg"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="mobileSearchInput" onkeyup="filterMovies(true)" placeholder="ဇာတ်လမ်းနာမည် ရှာရန်..." 
+                    class="w-full bg-mukahta-cardBg border border-mukahta-border rounded-xl py-2 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mukahta-gold">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 flex-grow w-full">
+
+        <!-- Hero Featured Spotlight Banner -->
+        <section class="relative rounded-3xl overflow-hidden bg-mukahta-cardBg border border-mukahta-border shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-t from-mukahta-darkBg via-mukahta-darkBg/60 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80" 
+                 alt="Featured Movie Banner" class="w-full h-80 sm:h-[420px] object-cover object-center filter brightness-90">
+            
+            <div class="absolute bottom-0 inset-x-0 p-6 sm:p-10 z-20 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="max-w-2xl space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-mukahta-red text-white text-xs px-3 py-1 rounded-full font-bold tracking-wider uppercase flex items-center gap-1">
+                            <i class="fa-solid fa-fire text-yellow-300"></i> Latest Recap
+                        </span>
+                        <span class="text-xs text-gray-300 bg-black/40 px-3 py-1 rounded-full border border-white/10 backdrop-blur"><i class="fa-solid fa-star text-mukahta-gold mr-1"></i>8.8 IMDb</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">MUKAHTA RECAP SPOTLIGHT</h1>
+                    <p class="text-mukahta-gold font-medium text-sm sm:text-base">မြန်မာဘာသာဖြင့် စိတ်ဝင်စားဖွယ်ရာ ရုပ်ရှင်ဇာတ်လမ်းများကို စနစ်တကျ အညွှန်း ရေးသားတင်ဆက်ပေးနေပါသည်</p>
+                    <p class="text-gray-300 text-xs sm:text-sm line-clamp-2 leading-relaxed">
+                        စိတ္တဇသရဲကားများ၊ အက်ရှင်၊ သိပ္ပံဇာတ်ကားများနှင့် သည်းထိတ်ရင်ဖို ရုပ်ရှင်များကို Mukahta Recap တွင် တစ်နေရာတည်း ကြည့်ရှုနိုင်ပါသည်။
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filter Bar -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between border-b border-mukahta-border pb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-clapperboard text-mukahta-gold text-xl"></i>
+                    <h2 class="text-xl font-bold text-white">ရုပ်ရှင် Recap မျာ:</h2>
+                </div>
+                <span id="movieCount" class="text-xs text-mukahta-gold font-semibold bg-mukahta-cardBg px-3.5 py-1.5 rounded-full border border-mukahta-border">Total: 5 Movies</span>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterGenre('all')" class="genre-btn active bg-mukahta-gold text-black px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all shadow-md">
+                    အားလုံး (All)
+                </button>
+                <button onclick="filterGenre('Action')" class="genre-btn bg-mukahta-cardBg hover:bg-mukahta-border text-gray-300 px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border border-mukahta-border">
+                    💥 Action
+                </button>
+                <button onclick="filterGenre('Horror')" class="genre-btn bg-mukahta-cardBg hover:bg-mukahta-border text-gray-300 px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border border-mukahta-border">
+                    👻 Horror / Thriller
+                </button>
+                <button onclick="filterGenre('Drama')" class="genre-btn bg-mukahta-cardBg hover:bg-mukahta-border text-gray-300 px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border border-mukahta-border">
+                    🎭 Drama / Romance
+                </button>
+                <button onclick="filterGenre('Sci-Fi')" class="genre-btn bg-mukahta-cardBg hover:bg-mukahta-border text-gray-300 px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border border-mukahta-border">
+                    🚀 Sci-Fi
+                </button>
+            </div>
+        </section>
+
+        <!-- Movie Cards Grid -->
+        <section id="movieGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic Movie Cards Rendered Here -->
+        </section>
+
+    </main>
+
+    <!-- Interactive Detailed Recap Modal -->
+    <div id="recapModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-mukahta-cardBg border border-mukahta-border w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl relative my-8 animate-fade-in">
+            <!-- Modal Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-black/70 hover:bg-mukahta-red text-white rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Embedded Video Player -->
+            <div class="relative aspect-video w-full bg-black">
+                <iframe id="modalIframe" class="w-full h-full" src="" title="Mukahta Recap Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <!-- Modal Body Details -->
+            <div class="p-6 space-y-5">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-mukahta-border pb-4">
+                    <div>
+                        <h3 id="modalTitle" class="text-2xl font-extrabold text-white">Movie Title</h3>
+                        <div class="flex items-center gap-3 text-xs text-gray-400 mt-1.5">
+                            <span id="modalYear" class="bg-mukahta-border px-2 py-0.5 rounded text-gray-200">Year</span>
+                            <span id="modalGenre" class="text-mukahta-gold font-bold">Genre</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-mukahta-gold/10 border border-mukahta-gold/30 text-mukahta-gold px-3.5 py-1.5 rounded-full text-sm font-bold">
+                        <i class="fa-solid fa-star"></i>
+                        <span id="modalRating">8.5</span>
+                    </div>
+                </div>
+
+                <!-- Plot Overview -->
+                <div>
+                    <h4 class="text-xs font-bold text-mukahta-gold uppercase tracking-wider mb-1.5"><i class="fa-solid fa-align-left mr-1"></i> ဇာတ်လမ်းအကျဉ်း</h4>
+                    <p id="modalSynopsis" class="text-gray-300 text-sm leading-relaxed">
+                        Overview plot summary content...
+                    </p>
+                </div>
+
+                <!-- Detailed Written Recap -->
+                <div class="bg-mukahta-darkBg/60 p-4 rounded-2xl border border-mukahta-border space-y-2">
+                    <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider"><i class="fa-solid fa-book-open text-mukahta-gold mr-1"></i> ဇာတ်လမ်းအသေးစိတ် Recap စာသား</h4>
+                    <p id="modalFullRecap" class="text-gray-400 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+                        Full detailed recap text content will appear here...
+                    </p>
+                </div>
+
+                <!-- Subscribe Call-to-action -->
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <span class="text-xs text-gray-400">Mukahta Recap Channel ကို Subscribe လုပ်ထားဖို့ မမေ့ပါနဲ့နဲ့နော် ❤️</span>
+                    <a href="https://youtube.com" target="_blank" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg">
+                        <i class="fa-brands fa-youtube text-base"></i> Subscribe YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Add New Movie Modal -->
+    <div id="addModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-mukahta-cardBg border border-mukahta-border w-full max-w-lg rounded-3xl p-6 shadow-2xl relative my-8">
+            <button onclick="closeAddModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-video text-mukahta-gold"></i>
+                Recap အသစ် ထည့်သွင်းရန်
+            </h3>
+
+            <form id="addMovieForm" onsubmit="handleAddMovie(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">ရုပ်ရှင်အမည် (Title)</label>
+                    <input type="text" id="addTitle" required placeholder="ဥပမာ - Crime 101 (2026)" class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                </div>
+                
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">အမျိုးအစား (Genre)</label>
+                        <select id="addGenre" class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                            <option value="Action">Action</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">ခုနှစ် (Year)</label>
+                        <input type="text" id="addYear" required placeholder="2026" class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold mb-1">Rating</label>
+                        <input type="text" id="addRating" required placeholder="8.0" class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">Poster ပုံစံ Link (Image URL)</label>
+                    <input type="url" id="addPoster" required placeholder="https://..." class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">YouTube Video ID သို့မဟုတ် Link</label>
+                    <input type="text" id="addYoutube" required placeholder="ဥပမာ - zSWdZVtXT7E သို့မဟုတ် YouTube link" class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">ဇာတ်လမ်းအကျဉ်း (Summary)</label>
+                    <textarea id="addSynopsis" rows="2" required placeholder="ရုပ်ရှင် အညွှန်းအကျဉ်း..." class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-1">ဇာတ်လမ်းအသေးစိတ် Recap စာသား</label>
+                    <textarea id="addFullRecap" rows="3" required placeholder="ဇာတ်လမ်း အစ၊ အလယ်၊ အဆုံး Recap..." class="w-full bg-mukahta-darkBg border border-mukahta-border rounded-xl p-2.5 text-white focus:outline-none focus:border-mukahta-gold"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-mukahta-gold hover:bg-mukahta-goldHover text-black py-3 rounded-xl font-bold text-sm transition-all shadow-md mt-2">
+                    <i class="fa-solid fa-check mr-1"></i> တင်သွင်းမည်
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-mukahta-cardBg border-t border-mukahta-border py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <div class="flex items-center justify-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-tr from-mukahta-red to-mukahta-gold rounded-lg flex items-center justify-center font-black text-black text-sm">M</div>
+                <span class="font-extrabold text-white text-lg tracking-wider">MUKAHTA <span class="text-mukahta-gold">RECAP</span></span>
+            </div>
+            <p class="text-xs text-gray-400 max-w-md mx-auto">
+                မြန်မာဘာသာဖြင့် ရုပ်ရှင်အညွှန်း ဇာတ်လမ်းများကို စုစည်းပြသပေးသော Official Mukahta Recap Web Application.
+            </p>
+            <div class="flex justify-center gap-4 text-gray-400 pt-1">
+                <a href="https://youtube.com" target="_blank" class="hover:text-mukahta-gold transition-colors text-xl"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://facebook.com" target="_blank" class="hover:text-blue-500 transition-colors text-xl"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <p class="text-xs text-gray-500 pt-3 border-t border-mukahta-border max-w-xs mx-auto">
+                Created by <span class="text-mukahta-gold font-semibold">T1tto</span> &copy; 2026 Mukahta Recap.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script>
+        // Sample Movies Data (Burmese language content for Mukahta Recap)
+        let movies = [
+            {
+                id: 'crime101',
+                title: 'Crime 101 (2026)',
+                genre: 'Action',
+                year: '2026',
+                rating: '8.4',
+                poster: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
+                youtubeId: ' YoHD9XEInc0',
+                synopsis: 'အနောက်ဘက်ကမ်းခြေတစ်လျှောက် တန်ဖိုးကြီး ရတနာများကို မရိပ်မိအောင် ခိုးယူလေ့ရှိသော သက်ကြီးဝါရင့် ခိုးသူကြီးတစ်ဦး၏ နောက်ဆုံး ဓားပြတိုက်မှု Recap။',
+                fullRecap: 'ဒီဇာတ်လမ်းမှာ အလွန်စနစ်ကျတဲ့ ဓားပြကြီးဟာ ရဲတွေ လုံးဝမရိပ်မိနိုင်တဲ့ နည်းလမ်းတွေနဲ့ ဓားပြတိုက်ခဲ့တာပါ။ ဒါပေမဲ့ စုံထောက်တစ်ဦးက ဒီပြစ်မှုတွေအားလုံးဟာ Crime 101 လက်စွဲအတိုင်း ပြုလုပ်ထားကြောင်း ရိပ်မိသွားတဲ့အခါ စိတ်လှုပ်ရှားဖွယ် ဉာဏ်စမ်းပွဲ စတင်လာခဲ့ပါတယ်။'
+            },
+            {
+                id: 'pinocchio',
+                title: 'Pinocchio: Unstrung (2026)',
+                genre: 'Horror',
+                year: '2026',
+                rating: '7.8',
+                poster: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80',
+                youtubeId: 'k10ETZ41q5o',
+                synopsis: 'လူအစစ်ဖြစ်ချင်သော သစ်သားရုပ်သေးရုပ်လေး ပီနိုချီယို၏ မှောင်မိုက်ဆန်းကြယ်သော Horror ပုံစံ ပြန်လည်ဆန်းသစ်ထားသည့် ဇာတ်လမ်း။',
+                fullRecap: 'ဂါပက်တို ပြုလုပ်ထားတဲ့ သစ်သားရုပ်သေးလေး ပီနိုချီယိုဟာ လူအစစ်ဖြစ်ချင်လွန်းလို့ လူတွေရဲ့ အသားနဲ့ သွေးတွေကို လိုက်လံရှာဖွေပြီး ခန္ဓာကိုယ်မှာ တပ်ဆင်ရာမှ စတင်ခဲ့သည့် ထိတ်လန့်စရာ ဇာတ်လမ်းဖြစ်ပါသည်။'
+            },
+            {
+                id: 'vivalavida',
+                title: 'Viva La Vida (2024)',
+                genre: 'Drama',
+                year: '2024',
+                rating: '8.2',
+                poster: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+                youtubeId: 'zSWdZVtXT7E',
+                synopsis: 'ပြင်းထန်သော ရောဂါဝေဒနာကို ခံစားနေကြရသည့် လူငယ်နှစ်ဦး၏ ဘဝနောက်ဆုံးအချိန်၌ ပေးဆပ်ခဲ့ကြသော ချစ်ခြင်းမေတ္တာနှင့် ဘဝသင်ခန်းစာ။',
+                fullRecap: 'ဒီဇာတ်ကားမှာ လျှောက်ထားသူ နှစ်ဦးဟာ အချင်းချင်း ကူညီဖို့ သဘောတူညီချက်တစ်ခု ပြုလုပ်ခဲ့ကြရာမှ အစပြုခဲ့ပါတယ်။ ဘဝရဲ့ မျှော်လင့်ချက်မဲ့နေချိန်မှာ အချင်းချင်း ခွန်အားပေးရင်း မေတ္တာတရားရဲ့ အဓိပ္ပာယ်ကို ဖော်ကျူးထားတဲ့ ဝမ်းနည်းစရာ ဒရမ်မာကား ဖြစ်ပါတယ်။'
+            },
+            {
+                id: 'hunger',
+                title: 'Hunger (2023)',
+                genre: 'Drama',
+                year: '2023',
+                rating: '7.6',
+                poster: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80',
+                youtubeId: 'C0BMx-qxsP4',
+                synopsis: 'လမ်းဘေး ခေါက်ဆွဲဆိုင်မှ စားဖိုမှူးမလေးတစ်ဦး အထက်တန်းစား စားသောက်ဆိုင်ကြီး၏ ရက်စက်လှသော အဓိက စားဖိုမှူးကြီးထံတွင် ပညာသင်ယူရင်း ကြုံတွေ့ရသည့် အားပြိုင်မှုများ။',
+                fullRecap: 'အီလက်ထရောနစ်နဲ့ အစားအစာ လောကရဲ့ မှောင်မိုက်တဲ့ အခြမ်းကို ရိုက်ကူးထားတာဖြစ်ပြီး အောင်မြင်မှုရဖို့အတွက် ဘာတွေ ပေးဆပ်ရမလဲဆိုတာကို အစားအသောက် အနုပညာနဲ့ ယှဉ်ပြီး မီးမောင်းထိုးပြထားပါတယ်။'
+            },
+            {
+                id: 'limitless',
+                title: 'Limitless (2011)',
+                genre: 'Sci-Fi',
+                year: '2011',
+                rating: '7.4',
+                poster: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+                youtubeId: 'znmZoVkCoci',
+                synopsis: 'ဦးနှောက်စွမ်းရည်ကို ၁၀၀ ရာခိုင်နှုန်း အပြည့်အဝ အသုံးပြုနိုင်စေသည့် ဆေးပြားတစ်ပြားကြောင့် ဘဝပြောင်းလဲသွားသော စာရေးဆရာတစ်ဦး၏ Sci-Fi Thriller ဇာတ်ကား။',
+                fullRecap: 'NZT-48 ဆိုတဲ့ ဆေးပြားကို သောက်လိုက်တာနဲ့ လူတစ်ယောက်ဟာ ကမ္ဘာပေါ်မှာ အသိဉာဏ်အရှိဆုံး ပုဂ္ဂိုလ် ဖြစ်လာခဲ့ပေမယ့် ထိုဆေးရဲ့ ဘေးထွက်ဆိုးကျိုးနဲ့ သူ့နောက်ကို လိုက်နေတဲ့ လျှို့ဝှက်အဖွဲ့အစည်းတွေကြောင့် ဒုက္ခရောက်ရပုံ Recap ဖြစ်ပါတယ်။'
+            }
+        ];
+
+        let selectedGenre = 'all';
+
+        // Render Cards Generator
+        function renderMovies(movieList) {
+            const grid = document.getElementById('movieGrid');
+            const countText = document.getElementById('movieCount');
+            grid.innerHTML = '';
+            
+            countText.innerText = `Total: ${movieList.length} Movies`;
+
+            if (movieList.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-3">
+                        <i class="fa-solid fa-film text-5xl text-gray-700"></i>
+                        <p class="text-gray-400 font-medium">ရှာဖွေထားသော ရုပ်ရှင် မရှိသေးပါ။</p>
+                    </div>
+                `;
+                return;
+            }
+
+            movieList.forEach(movie => {
+                const card = document.createElement('div');
+                card.className = 'bg-mukahta-cardBg border border-mukahta-border rounded-2xl overflow-hidden card-glow transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div>
+                        <!-- Poster Container -->
+                        <div class="relative overflow-hidden aspect-[16/9] cursor-pointer" onclick="openModal('${movie.id}')">
+                            <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-95">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="w-12 h-12 bg-mukahta-gold text-black rounded-full flex items-center justify-center text-xl shadow-lg shadow-mukahta-gold/40">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 right-3 bg-black/80 backdrop-blur text-mukahta-gold text-xs px-2.5 py-1 rounded-full font-extrabold border border-mukahta-gold/20">
+                                <i class="fa-solid fa-star"></i> ${movie.rating}
+                            </span>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-5 space-y-2.5">
+                            <div class="flex items-center justify-between text-xs text-gray-400">
+                                <span class="bg-mukahta-border text-mukahta-gold px-2.5 py-0.5 rounded-full font-bold">${movie.genre}</span>
+                                <span class="text-gray-400 font-medium">${movie.year}</span>
+                            </div>
+                            <h3 class="font-bold text-white text-base group-hover:text-mukahta-gold transition-colors line-clamp-1">${movie.title}</h3>
+                            <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed">${movie.synopsis}</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Bottom Button -->
+                    <div class="p-5 pt-0">
+                        <button onclick="openModal('${movie.id}')" class="w-full bg-mukahta-border hover:bg-mukahta-gold hover:text-black text-white text-xs py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-play text-sm"></i> Recap ကြည့်မည်
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Movies by Category
+        function filterGenre(genre) {
+            selectedGenre = genre;
+
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                if (btn.innerText.includes(genre) || (genre === 'all' && btn.innerText.includes('အားလုံး'))) {
+                    btn.className = 'genre-btn active bg-mukahta-gold text-black px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all shadow-md';
+                } else {
+                    btn.className = 'genre-btn bg-mukahta-cardBg hover:bg-mukahta-border text-gray-300 px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border border-mukahta-border';
+                }
+            });
+
+            filterMovies();
+        }
+
+        // Filter Logic
+        function filterMovies(isMobile = false) {
+            const searchVal = isMobile 
+                ? document.getElementById('mobileSearchInput').value.toLowerCase()
+                : document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = movies.filter(m => {
+                const matchesGenre = (selectedGenre === 'all') || (m.genre.toLowerCase().includes(selectedGenre.toLowerCase()));
+                const matchesSearch = m.title.toLowerCase().includes(searchVal) || m.synopsis.toLowerCase().includes(searchVal);
+                return matchesGenre && matchesSearch;
+            });
+
+            renderMovies(filtered);
+        }
+
+        // Modal Logic
+        function openModal(movieId) {
+            const movie = movies.find(m => m.id === movieId);
+            if (!movie) return;
+
+            document.getElementById('modalTitle').innerText = movie.title;
+            document.getElementById('modalYear').innerText = movie.year;
+            document.getElementById('modalGenre').innerText = movie.genre;
+            document.getElementById('modalRating').innerText = movie.rating;
+            document.getElementById('modalSynopsis').innerText = movie.synopsis;
+            document.getElementById('modalFullRecap').innerText = movie.fullRecap || movie.synopsis;
+
+            // Extract YouTube ID clean logic
+            let cleanYtId = movie.youtubeId.trim();
+            if (cleanYtId.includes('v=')) {
+                cleanYtId = cleanYtId.split('v=')[1].split('&')[0];
+            } else if (cleanYtId.includes('youtu.be/')) {
+                cleanYtId = cleanYtId.split('youtu.be/')[1].split('?')[0];
+            }
+
+            const iframe = document.getElementById('modalIframe');
+            iframe.src = `https://www.youtube.com/embed/${cleanYtId}?autoplay=1`;
+
+            document.getElementById('recapModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const iframe = document.getElementById('modalIframe');
+            iframe.src = '';
+            document.getElementById('recapModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Admin Add Modal Functions
+        function openAddModal() {
+            document.getElementById('addModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleAddMovie(event) {
+            event.preventDefault();
+            const newMovie = {
+                id: 'custom-' + Date.now(),
+                title: document.getElementById('addTitle').value,
+                genre: document.getElementById('addGenre').value,
+                year: document.getElementById('addYear').value,
+                rating: document.getElementById('addRating').value,
+                poster: document.getElementById('addPoster').value,
+                youtubeId: document.getElementById('addYoutube').value,
+                synopsis: document.getElementById('addSynopsis').value,
+                fullRecap: document.getElementById('addFullRecap').value
+            };
+
+            movies.unshift(newMovie); // Add to top
+            renderMovies(movies);
+            closeAddModal();
+            document.getElementById('addMovieForm').reset();
+        }
+
+        // On Load Init
+        window.onload = function() {
+            renderMovies(movies);
+        };
+    </script>
+</body>
+</html>
+```
+
+---
+
+### 💡 အသုံးပြုပုံ သတိပြုရန်
+
+1. **Recap အသစ် တင်လိုပါက:**
+   - ညာဘက်အပေါ်ရှိ **"+ Recap အသစ်ထည့်ရန်"** ခလုတ်ကို နှိပ်ပါ။
+   - ရုပ်ရှင်နာမည်၊ ပိုစတာပုံ URL နဲ့ သင့် YouTube Video Link ရိုက်ထည့်လိုက်ရင် Website ထဲမှာ အလိုအလျောက် ပေါ်လာပါမည်။
+2. **အခမဲ့ Live Website တင်နည်း:**
+   - အဆိုပါ `index.html` ဖိုင်ကို **[Netlify Drop](https://app.netlify.com/drop)** (သို့မဟုတ်) **GitHub Pages** ပေါ်တွင် တင်လိုက်ပါက Mukahta Recap အတွက် အခမဲ့ Live Link တိုက်ရိုက် ရရှိမည်ဖြစ်ပါသည်။
